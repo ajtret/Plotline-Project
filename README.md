@@ -18,27 +18,6 @@ The **Train Scheduler App** is a React-based application designed to manage and 
 - **CSS (Inline Styles):** Styled using a inline CSS for better organization and maintainability.
 
 
-File Structure
-
-/train-scheduler-app
-│
-├── /public                 # Public files like index.html
-├── /src                    # Source code
-│   ├── /components         # React components (TrainScheduler, etc.)
-│   ├── /styles             # External CSS files
-│   ├── App.js              # Main app component
-│   └── index.js            # Entry point to render the app
-└── package.json            # Project metadata and dependencies
-How it Works
-CSV Upload: Users can upload a CSV file with train data. The file should contain columns for:
-
-Train Number
-
-Arrival Time
-
-Departure Time
-
-Priority
 
 Train Scheduling: Upon file upload, the app processes the CSV and schedules trains on platforms, prioritizing based on the train's priority. If there are more trains than platforms, the excess trains are listed as waiting.
 
