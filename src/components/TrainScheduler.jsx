@@ -9,7 +9,9 @@ function TrainScheduler() {
   const [platforms, setPlatforms] = useState([]);
   const [waitingTrains, setWaitingTrains] = useState([]);
   const [trainLog, setTrainLog] = useState([]);
-  const [platformCount, setPlatformCount] = useState(10);
+  const [platformCount, setPlatformCount] = useState(2);
+  const [currentTime, setCurrentTime] = useState("10:00")
+  const [updateTrains, setUpdateTrains] = useState([])
 
   useEffect(() => {
     if (platformCount >= 2 && platformCount <= 20) {
@@ -18,6 +20,20 @@ function TrainScheduler() {
       setTrainLog([]);
     }
   }, [platformCount]);
+
+  useEffect(() => {
+    if (!currentTime) return
+    const timer = setInterval(() => {
+      setCurrentTime(prev => {
+      const [h,m] = prev.split(":").map(Number)
+      const prevDate = new Date()
+      prevDate.setHours(h,m,0,0)
+       const nextDate = new Date(prevDate.getTime() + 60*1000)
+      return nextDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit'})
+      })
+    }, 1000)
+    return () => clearInterval(timer)
+  }, [currentTime])
 
   const handleScheduleTrains = (trains) => {
     const { allocated, waiting } = scheduleTrains(trains, platformCount);
@@ -114,6 +130,12 @@ function TrainScheduler() {
       </div>
 
       <WaitingTrains waitingTrains={waitingTrains} />
+
+      {currentTime && (
+        <div style={{marginBottom:"20px", fontSize: "25px"}}>
+          {currentTime}
+        </div>
+      )}
 
       <TrainLog trainLog={trainLog} />
     </div>
